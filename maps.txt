@@ -1,0 +1,55 @@
+fugative:
+    l + gs          | Git
+harpoon:
+    l + a           | Add file 
+    Ctrl + e        | Toggle menu 
+    Ctrl + h        | nav file 1
+    Ctrl + t        | nav file 2
+    Ctrl + n        | nav file 3 
+    Ctrl + s        | nav file 4
+lsp: 
+    Ctrl + p        | prev item
+    Ctrl + n        | next item
+    Ctrl + space    | complete
+    Ctrl + i        | confirm
+    gd              | definition
+    K               | hover
+    l + vws         | workspace symbol
+    l + vd          | vim diagnostic, open float
+    [d              | vim diagnostic go to next
+    ]d              | vim diagnostic go to prev
+    l + vca         | code action
+    l + vrr         | references 
+    l + vrn         | rename
+    insertMode | C+h| signature help
+telescope:
+    l + pf          | find files
+    Ctrl + p        | git files
+    l + ps          | grep string
+undotree:
+("v", "J", ":m '>+1<CR>gv=gv") // move text with shift J in visual
+("v", "K", ":m '<-2<CR>gv=gv") // ditto but K
+("n", "J", "mzJ`z") // append line below to current line, keep cursor position
+("n", "<C-d>", "<C-d>zz") 
+    l + u           | undo-tree
+("n", "<C-u>", "<C-u>zz")
+("n", "n", "nzzzv")
+("n", "N", "Nzzzv")
+("x", "<leader>p", [["_dP]])
+({"n", "v"}, "<leader>y", [["+y]]) // clipboard yank
+("n", "<leader>Y", [["+Y]])       //Clipboard + vim clipboard yank ? 
+({"n", "v"}, "<leader>d", [["_d]])
+("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+("n", "<leader>f", vim.lsp.buf.format) // format
+("n", "<C-k>", "<cmd>cnext<CR>zz") // possible jump to next error ? 
+("n", "<C-j>", "<cmd>cprev<CR>zz") // ditto
+("n", "<leader>k", "<cmd>lnext<CR>zz")
+("n", "<leader>j", "<cmd>lprev<CR>zz")
+("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true }) // turn into executable
+("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
+("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
+("n", "<leader><leader>", function()
+    vim.cmd("so")
+
+
