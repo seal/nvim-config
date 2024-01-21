@@ -21,14 +21,24 @@ return require('packer').startup(function(use)
 	 -- or                            , branch = '0.1.x',
 	 requires = { {'nvim-lua/plenary.nvim'} }
   }
+use { 'alexghergh/nvim-tmux-navigation', config = function()
 
-  use({
-	 'rose-pine/neovim',
-	 as = 'rose-pine',
-	 config = function()
-		 vim.cmd('colorscheme rose-pine')
-	 end
-  })
+        local nvim_tmux_nav = require('nvim-tmux-navigation')
+
+        nvim_tmux_nav.setup {
+            disable_when_zoomed = true -- defaults to false
+        }
+
+        vim.keymap.set('n', "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+        vim.keymap.set('n', "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
+        vim.keymap.set('n', "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
+        vim.keymap.set('n', "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+        vim.keymap.set('n', "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
+        vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
+
+    end
+}
+use { "catppuccin/nvim", as = "catppuccin" }
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
   use('nvim-treesitter/playground')
   use('theprimeagen/harpoon')
