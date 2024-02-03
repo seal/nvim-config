@@ -1,4 +1,3 @@
-
 require("mason").setup()
 local lsp = require("lsp-zero")
 local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -19,34 +18,41 @@ lsp.preset("recommended")
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  -- Replace the language servers listed here
-  -- with the ones you want to install
-  ensure_installed = {'gopls', 'rust_analyzer','tsserver'},
-  handlers = {
-    lsp.default_setup,
-  }
+    -- Replace the language servers listed here
+    -- with the ones you want to install
+    ensure_installed = { 'gopls', 'rust_analyzer', 'tsserver' },
+    handlers = {
+        lsp.default_setup,
+    }
+})
+require('lspconfig').tsserver.setup({
+    init_options = {
+        preferences = {
+            disableSuggestions = true,
+        },
+    },
 })
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = {
-  ['<CR>'] = cmp.mapping.confirm({ select = false }),
-  ['<C-Space>'] = cmp.mapping.complete(),
-  ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-  ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-i>'] = cmp.mapping.confirm({ select = true }),
-  ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-  ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-i>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
 }
 
 -- Remove Tab mappings
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
 cmp.setup({
-  mapping = cmp.mapping(cmp_mappings),
+    mapping = cmp.mapping(cmp_mappings),
 })
 
 -- Fix Undefined global 'vim'
@@ -70,7 +76,8 @@ cmp_mappings['<S-Tab>'] = nil
 --})
 --local lsp_zero = require('lsp-zero')
 
-]]--
+]]
+--
 lsp.set_preferences({
     suggest_lsp_servers = false,
     sign_icons = {
