@@ -15,26 +15,31 @@ local lsp_format_on_save = function(bufnr)
     })
 end
 lsp.preset("recommended")
-
 require('mason').setup({})
 require('mason-lspconfig').setup({
     -- Replace the language servers listed here
     -- with the ones you want to install
-    ensure_installed = { 'gopls', 'rust_analyzer', 'tsserver' },
+    --ensure_installed = { 'gopls', 'rust_analyzer', 'tsserver' },
+    ensure_installed = { 'tsserver', 'denols', 'gopls', 'rust_analyzer' },
     handlers = {
         lsp.default_setup,
     }
 })
-require('lspconfig').tsserver.setup({
-    init_options = {
-        preferences = {
-            disableSuggestions = true,
-        },
-    },
-})
+
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
+local nvim_lsp = require('lspconfig')
+nvim_lsp.denols.setup {
+    on_attach = on_attach,
+    root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+}
+
+nvim_lsp.tsserver.setup {
+    on_attach = on_attach,
+    root_dir = nvim_lsp.util.root_pattern("package.json"),
+    single_file_support = false
+}
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = {
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
@@ -55,29 +60,6 @@ cmp.setup({
     mapping = cmp.mapping(cmp_mappings),
 })
 
--- Fix Undefined global 'vim'
---lsp.nvim_workspace()
--- Removed as no longer supported
-
---[[
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-i>'] = cmp.mapping.confirm({ select = true }),
-    ["<C-Space>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
--- lsp.setup_nvim_cmp({
-  ----   mapping = cmp_mappings
---})
---local lsp_zero = require('lsp-zero')
-
-]]
---
 lsp.set_preferences({
     suggest_lsp_servers = false,
     sign_icons = {
